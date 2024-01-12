@@ -12,7 +12,7 @@ node {
             }   
         } 
         catch (exc) {
-            echo('Jenkins: Test stage failed')
+            echo 'Jenkins: Test stage failed'
             throw
         } 
         finally {
@@ -28,6 +28,6 @@ node {
                 archiveArtifacts 'dist/add2vals'
             }   
     } catch(exc) {
-        echo('Jenkins: Deliver stage failed')
+        echo 'Jenkins: Deliver stage failed'
     }
 }
