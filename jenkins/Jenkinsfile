@@ -30,4 +30,3 @@ node {
     } catch(exc) {
         echo 'Jenkins: Deliver stage failed'
     }
-}
