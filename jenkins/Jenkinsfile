@@ -12,6 +12,7 @@ node {
             }   
         } catch(exc) {
             echo('Jenkins: Test stage failed')
+            throw
         } finally {
             docker.image('qnib/pytest').inside('-v /root/.m2:/root/.m2') {
                 junit 'test-reports/results.xml'
@@ -20,7 +21,7 @@ node {
     }
     stage('Deliver')
     try {
-            docker.image('cdrx/pyinstaller-linux:python2').inside('-v /root/.m2:/root/.m2') {
+            docker.image('cdrx/pyinstaller-linux:python2').inside('-v /root/.m2:/root/.m2 --entrypoint=''') {
                 sh 'py.test --verbose --junit-xml test-reports/results.xml sources/test_calc.py'
                 archiveArtifacts 'dist/add2vals'
             }   
