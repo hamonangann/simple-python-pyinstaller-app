@@ -25,7 +25,13 @@ node {
         input message: 'Lanjutkan ke tahap Deploy?'
     }
     stage('Deploy') {
+        sh 'ssh-keyscan -H 203.145.34.25 >> ~/.ssh/known_hosts'
+        sh '/usr/bin/scp -i idcloudhost.pem sources root@203.145.34.25:/home/hamonangann/sources'
+        docker.image('cdrx/pyinstaller-linux:python2').inside('-v /root/.m2:/root/.m2') {
+            sh 'ssh -i idcloushost.pem root@203.145.34.25'
+            sh 'pyinstaller --onefile sources/add2vals.py'
+        }
+        archiveArtifacts 'dist/add2vals'
         sleep 60
-        echo 'Deploy completed!'
     }
 }
