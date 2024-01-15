@@ -23,5 +23,6 @@ node {
     }
     stage('Deploy') {
         sleep 60
+        echo 'Deploy completed!'
     }
 }
