@@ -1,7 +1,7 @@
 node {
     checkout scm
     def remote = [:]
-    remote.name = ''
+    remote.name = 'test'
     remote.host = '203.145.34.25'
     remote.user = 'root'
     remote.password = env.IDCLOUDHOST_PWD
