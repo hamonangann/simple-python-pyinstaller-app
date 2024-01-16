@@ -33,10 +33,10 @@ node {
     stage('Deploy') {
         dir(path: env.BUILD_ID) {
             unstash(name: 'compiled-results')
-            sh "docker run --rm -v '${pwd}/sources:/src' 'pyinstaller -F add2vals.py'"
+            sh "docker run --rm -v 'sources:/src' 'pyinstaller -F add2vals.py'"
         }
         archiveArtifacts "${env.BUILD_ID}/sources/dist/add2vals"
-        sh "docker run --rm -v '${pwd}/sources:/src' 'rm -rf build dist'"
+        sh "docker run --rm -v 'sources:/src' 'rm -rf build dist'"
         
         withCredentials([sshUserPrivateKey(credentialsId: 'IDCLOUDHOST_PRIVATE_KEY', keyFileVariable: 'identity')]) {
             remote.identityFile = identity
