@@ -42,7 +42,7 @@ node {
             remote.identityFile = identity
             sshPut remote: remote, from: dist_location, into: '.'
             sshCommand remote: remote, command: "chmod +x ./dist/add2vals"
-            sshCommand remote: remote, command: "./dist/add2vals"
+            sshCommand remote: remote, command: "./dist/add2vals 3 4" // should return 7
         }
         sh "docker run --rm -v '/var/jenkins_home/workspace/submission-cicd-pipeline-wibucina/${env.BUILD_ID}/sources:/src' 'cdrx/pyinstaller-linux:python2' 'rm -rf build dist'"
         sleep 60
