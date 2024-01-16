@@ -30,6 +30,7 @@ node {
         input message: 'Lanjutkan ke tahap Deploy?'
     }
     stage('Deploy') {
+        docker.build("add2vals:latest")
         withCredentials([sshUserPrivateKey(credentialsId: 'IDCLOUDHOST_PRIVATE_KEY', keyFileVariable: 'identity')]) {
             remote.identityFile = identity
             sshPut remote: remote, from: 'sources', into: '.'
