@@ -4,8 +4,8 @@ node {
     remote.name = 'root'
     remote.host = '203.145.34.25'
     remote.user = 'root'
-    remote.password = ${env.IDCLOUDHOST_PWD}
-    remote.identity = ${env.IDCLOUDHOST_PRIVATE_KEY}
+    remote.password = env.IDCLOUDHOST_PWD
+    remote.identity = env.IDCLOUDHOST_PRIVATE_KEY
     remote.allowAnyHosts = true
     stage('Build') {
         docker.image('python:2-alpine').inside('-v /root/.m2:/root/.m2') {
