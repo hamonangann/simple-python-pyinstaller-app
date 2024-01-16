@@ -36,15 +36,15 @@ node {
             sh "pwd"
             sh "docker run --rm -v '/var/jenkins_home/workspace/submission-cicd-pipeline-wibucina/${env.BUILD_ID}/sources:/src' 'cdrx/pyinstaller-linux:python2' 'pyinstaller -F add2vals.py'"
         }
-        archiveArtifacts "${env.BUILD_ID}/sources/dist/add2vals"
-        sh "docker run --rm -v '/var/jenkins_home/workspace/submission-cicd-pipeline-wibucina/${env.BUILD_ID}/sources:/src' 'cdrx/pyinstaller-linux:python2' 'rm -rf build dist'"
-        
+        archiveArtifacts "${env.BUILD_ID}/sources/dist/add2vals"  
+        dist_location = "${env.BUILD_ID}/sources/dist"      
         withCredentials([sshUserPrivateKey(credentialsId: 'IDCLOUDHOST_PRIVATE_KEY', keyFileVariable: 'identity')]) {
             remote.identityFile = identity
-            sshPut remote: remote, from: '${env.BUILD_ID}/sources/dist', into: '.'
+            sshPut remote: remote, from: dist_location, into: '.'
             sshCommand remote: remote, command: "chmod +x ./dist/add2vals"
             sshCommand remote: remote, command: "./dist/add2vals"
         }
+        sh "docker run --rm -v '/var/jenkins_home/workspace/submission-cicd-pipeline-wibucina/${env.BUILD_ID}/sources:/src' 'cdrx/pyinstaller-linux:python2' 'rm -rf build dist'"
         sleep 60
     }
 }
