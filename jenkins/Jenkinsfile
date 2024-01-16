@@ -41,8 +41,8 @@ node {
         
         withCredentials([sshUserPrivateKey(credentialsId: 'IDCLOUDHOST_PRIVATE_KEY', keyFileVariable: 'identity')]) {
             remote.identityFile = identity
-            sshPut remote: remote, from: 'dist', into: '.'
-            sshCommand remote: remote, command: "chmod +x dist/add2vals"
+            sshPut remote: remote, from: '${env.BUILD_ID}/sources/dist', into: '.'
+            sshCommand remote: remote, command: "chmod +x ./dist/add2vals"
             sshCommand remote: remote, command: "./dist/add2vals"
         }
         sleep 60
